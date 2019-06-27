@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import {getTaskDetails, addProjectTask} from './../actions/projectTaskActions'
+import { getUserDetails } from './../actions/userActions'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
@@ -19,6 +20,12 @@ class UpdateProjectTask extends Component
 
    this.onChange = this.onChange.bind(this);
    this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  componentWillMount()
+  {
+    if(this.props.loggedIn)
+      this.props.getUserDetails();
   }
 
   componentDidMount() {
@@ -54,7 +61,8 @@ class UpdateProjectTask extends Component
       id: this.state.id,
       summary: this.state.summary,
       acceptanceCriteria: this.state.acceptanceCriteria,
-      status: this.state.status
+      status: this.state.status,
+      user:this.props.user
     };
 
     this.props.addProjectTask(updatedTask, this.props.history);
@@ -63,67 +71,80 @@ class UpdateProjectTask extends Component
 
   render()
   {
-    const {errors}=this.state;
+    if(this.props.loggedIn==false)
+    {
+      console.log("flseeeeeeeeeeee")
+      return (
+        <div className="alert alert-info text-center" role="alert">
+          Please login to add the task
+        </div>
+      );
+    }
+    else {
+      const {errors}=this.state;
 
-    return(
-      <div className="addProjectTask">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-8 m-auto">
-              <a href="/" className="btn btn-light">
-                Back to Board
-              </a>
-              <h4 className="display-4 text-center">
-                Add /Update Project Task
-              </h4>
-              <form onSubmit={this.onSubmit}>
-                <div className="form-group">
+      return(
+        <div className="addProjectTask">
+          <div className="container">
+            <div className="row">
+              <div className="col-md-8 m-auto">
+                <a href="/" className="btn btn-light">
+                  Back to Board
+                </a>
+                <h4 className="display-4 text-center">
+                  Add /Update Project Task
+                </h4>
+                <form onSubmit={this.onSubmit}>
+                  <div className="form-group">
+                    <input
+                      type="text"
+                      className={classnames("form-control form-control-lg", {
+                        "is-invalid": errors.summary
+                      })}
+                      name="summary"
+                      placeholder="Project Task summary"
+                      value={this.state.summary}
+                      onChange={this.onChange}
+                    />
+                    {errors.summary && (
+                      <div className="invalid-feedback">{errors.summary}</div>
+                    )}
+                  </div>
+                  <div className="form-group">
+                    <textarea
+                      className="form-control form-control-lg"
+                      placeholder="Acceptance Criteria"
+                      name="acceptanceCriteria"
+                      value={this.state.acceptanceCriteria}
+                      onChange={this.onChange}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <select
+                      className="form-control form-control-lg"
+                      name="status"
+                      value={this.state.status}
+                      onChange={this.onChange}
+                    >
+                      <option value="">Select Status</option>
+                      <option value="TO_DO">TO DO</option>
+                      <option value="IN_PROGRESS">IN PROGRESS</option>
+                      <option value="DONE">DONE</option>
+                    </select>
+                  </div>
                   <input
-                    type="text"
-                    className={classnames("form-control form-control-lg", {
-                      "is-invalid": errors.summary
-                    })}
-                    name="summary"
-                    placeholder="Project Task summary"
-                    value={this.state.summary}
-                    onChange={this.onChange}
+                    type="submit"
+                    className="btn btn-primary btn-block mt-4"
                   />
-                  {errors.summary && (
-                    <div className="invalid-feedback">{errors.summary}</div>
-                  )}
-                </div>
-                <div className="form-group">
-                  <textarea
-                    className="form-control form-control-lg"
-                    placeholder="Acceptance Criteria"
-                    name="acceptanceCriteria"
-                    value={this.state.acceptanceCriteria}
-                    onChange={this.onChange}
-                  />
-                </div>
-                <div className="form-group">
-                  <select
-                    className="form-control form-control-lg"
-                    name="status"
-                    value={this.state.status}
-                    onChange={this.onChange}
-                  >
-                    <option value="">Select Status</option>
-                    <option value="TO_DO">TO DO</option>
-                    <option value="IN_PROGRESS">IN PROGRESS</option>
-                    <option value="DONE">DONE</option>
-                  </select>
-                </div>
-                <input
-                  type="submit"
-                  className="btn btn-primary btn-block mt-4"
-                />
-              </form>
+                </form>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    )
+      )
+
+    }
+
   }
 }
 
@@ -134,6 +155,8 @@ UpdateProjectTask.propTypes={
   addProjectTask: PropTypes.func.isRequired}
 
 const mapStatetoProps = state =>({
-  task_details:state.project_tasks.project_task
+  task_details:state.project_tasks.project_task,
+  user:state.user.user,
+  loggedIn:state.user.loggedIn
 })
-export default connect(mapStatetoProps,{getTaskDetails, addProjectTask})(UpdateProjectTask);
+export default connect(mapStatetoProps,{getTaskDetails, addProjectTask,getUserDetails})(UpdateProjectTask);

@@ -1,8 +1,8 @@
 import React,{Component} from 'react';
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {addProjectTask} from './../actions/projectTaskActions'
+import {validateUser} from './../actions/userActions'
 import classnames from 'classnames'
 
 
@@ -20,7 +20,6 @@ class Login extends Component
 
   onChange= (event) =>
   {
-    this.setState({submitted:false})
     this.setState(
       {
         [event.target.name]:event.target.value
@@ -33,13 +32,16 @@ class Login extends Component
     event.preventDefault();
     this.setState({submitted:true})
     if(this.state.username!=="" && this.state.password!=="")
-    console.log("yes")
+      {        this.props.validateUser(this.state.username,this.state.password);}
 
   }
 
-
   render()
   {
+    if (this.state.submitted && this.props.loggedIn) {console.log("authentuicated");
+    console.log(`in login, testing user, ${this.props.user.id}`)
+     return <Redirect to='/projectBoard'/>;  }
+    else {
       return(
       <div className="loginPage">
        <div className="container">
@@ -50,11 +52,11 @@ class Login extends Component
                        <div className="form-group">
                            <input type="Email"  className="form-control form-control-lg"  name="username" placeholder="Email" value={this.state.username}  onChange={this.onChange}/>
                        </div>
-                       {this.state.submitted && !this.state.username && <div className="invalid-feedback">Username is required</div>}
+                       {this.state.submitted && !this.state.username && <div>Username is required</div>}
                        <div className="form-group">
                            <input type="password"  className="form-control form-control-lg"  name="password" placeholder="Password" value={this.state.password}  onChange={this.onChange}/>
                        </div>
-                       {this.state.submitted && !this.state.password &&  <div className="invalid-feedback">Password is required</div>}
+                       {this.state.submitted && !this.state.password &&  <div >Password is required</div>}
                        <div className="form-group">
                        <input type="submit" className="btn btn-primary btn-block mt-4" />
                        </div>
@@ -64,13 +66,28 @@ class Login extends Component
                             Register
                         </Link>
                         </div>
+                         {this.state.submitted && <p>{this.props.message}</p>}
                    </form>
                 </div>
            </div>
        </div>
    </div>
     )
+
+    }
   }
 }
 
-export default Login
+Login.propTypes={
+  validateUser:PropTypes.func.isRequired,
+  message: PropTypes.string.isRequired
+}
+
+const mapStatetoProps = state =>({
+  message:state.user.message,
+  loggedIn:state.user.loggedIn,
+  user:state.user.user
+})
+
+
+export default connect(mapStatetoProps,{validateUser})(Login)

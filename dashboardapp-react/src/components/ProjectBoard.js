@@ -3,12 +3,25 @@ import { Link } from "react-router-dom";
 import ProjectTaskItem from './../ProjectTask/ProjectTaskItem'
 import { connect } from 'react-redux'
 import { getAllTasks } from './../actions/projectTaskActions'
+import { validateUser,getUserDetails } from './../actions/userActions'
 import PropTypes from "prop-types";
 
 class ProjectBoard extends Component {
+
+
+  componentWillMount()
+  {
+    if(this.props.loggedIn)
+      this.props.getUserDetails();
+  }
+
   componentDidMount() {
-   this.props.getAllTasks();
+    console.log("in did")
+    console.log(`in did: and user: ${this.props.user.id}`)
+   this.props.getAllTasks(this.props.user.id);
  }
+
+
   render() {
     const { project_tasks } = this.props.tasks;
     {console.log(this.props.tasks);}
@@ -18,6 +31,15 @@ class ProjectBoard extends Component {
     let doneItems = [];
 
     const BoardAlgorithm = project_tasks => {
+      if(this.props.loggedIn==false)
+      {
+        return (
+          <div className="alert alert-info text-center" role="alert">
+            Please login to view the board
+          </div>
+        );
+      }
+
       if (project_tasks.length < 1) {
         return (
           <div className="alert alert-info text-center" role="alert">
@@ -45,6 +67,7 @@ class ProjectBoard extends Component {
 
         return(
           <React.Fragment>
+          {console.log(`authenicate: ${this.props.loggedIn}`)}
           <div className="container">
             <div className="row">
               <div className="col-md-4">
@@ -105,7 +128,9 @@ ProjectBoard.propTypes = {
 
 const mapStatetoProps = (state) =>(
 {
-  tasks: state.project_tasks
+  tasks: state.project_tasks,
+  user:state.user.user,
+  loggedIn:state.user.loggedIn
 })
 
-export default connect(mapStatetoProps,{getAllTasks})(ProjectBoard);
+export default connect(mapStatetoProps,{getAllTasks, getUserDetails})(ProjectBoard);

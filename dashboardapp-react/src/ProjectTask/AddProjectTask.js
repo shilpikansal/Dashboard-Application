@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {addProjectTask} from './../actions/projectTaskActions'
+import { getUserDetails } from './../actions/userActions'
 import classnames from 'classnames'
 
 
@@ -16,7 +17,13 @@ class AddProjectTask extends Component
       acceptanceCriteria:"",
       status:"Select Status",
       errors:{}
-    }
+        }
+  }
+
+  componentWillMount()
+  {
+    if(this.props.loggedIn)
+      this.props.getUserDetails();
   }
 
   onChange=(event) =>
@@ -32,21 +39,33 @@ class AddProjectTask extends Component
     const newProjectTask = {
         summary: this.state.summary,
         acceptanceCriteria: this.state.acceptanceCriteria,
-        status: this.state.status
+        status: this.state.status,
+        user:this.props.user
       };
+      console.log(`user:${this.state.user}`)
      this.props.addProjectTask(newProjectTask, this.props.history);
   }
   render()
   {
+    if(this.props.loggedIn==false)
+    {
+      console.log("flseeeeeeeeeeee")
+      return (
+        <div className="alert alert-info text-center" role="alert">
+          Please login to add the task
+        </div>
+      );
+    }
+    else {
       return(
       <div className="addProjectTask">
        <div className="container">
            <div className="row">
                <div className="col-md-8 m-auto">
-                   <Link to="/" className="btn btn-light">
+                   <Link to="/projectBoard" className="btn btn-light">
                        Back to Board
                    </Link>
-                   <h4 className="display-4 text-center">Add /Update Project Task</h4>
+                   <h4 className="display-4 text-center">Add Project Task</h4>
                    <form onSubmit={this.onSubmit}>
                        <div className="form-group">
                            <input type="text"  className={classnames("form-control form-control-lg", { "is-invalid": this.props.errors.summary })}
@@ -73,6 +92,9 @@ class AddProjectTask extends Component
        </div>
    </div>
     )
+
+    }
+
   }
 }
 
@@ -82,8 +104,10 @@ AddProjectTask.propTypes={
 }
 
 const mapStatetoProps=state=>({
-  errors:state.errors
+  errors:state.errors,
+  loggedIn:state.user.loggedIn,
+  user:state.user.user
 
 })
 
-export default connect(mapStatetoProps,{addProjectTask})(AddProjectTask);
+export default connect(mapStatetoProps,{addProjectTask, getUserDetails})(AddProjectTask);

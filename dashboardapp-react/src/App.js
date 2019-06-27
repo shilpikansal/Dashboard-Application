@@ -20,7 +20,7 @@ function App() {
           <NavBar />
           <Route exact path="/" component={Login} />
           <Route exact path="/register" component={Register} />
-          <Route exact path="/projectBoard" component={ProjectBoard} />
+          <Route exact path="/projectBoard/" component={ProjectBoard} />
           <Route exact path="/addProjectTask" component={AddProjectTask} />
           <Route exact path="/updateProjectTask/:pt_id" component={updateProjectTask} />
         </div>
