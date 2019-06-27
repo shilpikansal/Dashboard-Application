@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_USER_DETAILS, VALID_USER, INVALID_USER } from './types'
+import { GET_USER_DETAILS, VALID_USER, INVALID_USER, GET_ERRORS } from './types'
 
 export const validateUser = (username, password) => async dispatch => {
     const res=await axios.get(`http://localhost:8080/api/user/username=${username}&&password=${password}`);
@@ -22,4 +22,23 @@ export const getUserDetails=() => dispatch => {
      dispatch({
         type:GET_USER_DETAILS,
         payload:""})
+}
+
+
+export const registerUser = (user,history) => async dispatch => {
+    try {
+      await axios.post("http://localhost:8080/api/user/register",user);
+      history.push("/");
+      dispatch({
+        type:GET_ERRORS,
+        payload:{}
+      })
+
+    } catch (e) {
+      dispatch({
+        type:GET_ERRORS,
+        payload:e.response.data
+      })
+    }
+
 }
