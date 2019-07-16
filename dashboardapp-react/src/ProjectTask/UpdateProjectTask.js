@@ -4,6 +4,7 @@ import { getUserDetails } from './../actions/userActions'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
+import { Link } from "react-router-dom";
 
 class UpdateProjectTask extends Component
 {
@@ -73,10 +74,11 @@ class UpdateProjectTask extends Component
   {
     if(this.props.loggedIn==false)
     {
-      console.log("flseeeeeeeeeeee")
       return (
-        <div className="alert alert-info text-center" role="alert">
-          Please login to add the task
+        <div>
+          <div className="alert alert-info text-center" role="alert">
+            Please login to update the task
+          </div>
         </div>
       );
     }
@@ -88,7 +90,7 @@ class UpdateProjectTask extends Component
           <div className="container">
             <div className="row">
               <div className="col-md-8 m-auto">
-                <a href="/" className="btn btn-light">
+                <a href="/projectBoard" className="btn btn-light">
                   Back to Board
                 </a>
                 <h4 className="display-4 text-center">

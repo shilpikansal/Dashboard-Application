@@ -34,8 +34,10 @@ class ProjectBoard extends Component {
       if(this.props.loggedIn==false)
       {
         return (
-          <div className="alert alert-info text-center" role="alert">
-            Please login to view the board
+          <div>
+            <div className="alert alert-info text-center" role="alert">
+              Please login to view the board
+            </div>
           </div>
         );
       }

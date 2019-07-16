@@ -47,7 +47,7 @@ class Register extends Component
                    <form onSubmit={this.onSubmit}>
                        <div className="form-group">
                        <input type="Email"  className={classnames("form-control form-control-lg", { "is-invalid": this.props.errors.username })}
-                        name="username" placeholder="Enyter Email" value={this.state.username} onChange={this.onChange} />
+                        name="username" placeholder="Enter Email" value={this.state.username} onChange={this.onChange} />
                         {this.props.errors.username && (
                           <div className="invalid-feedback">{this.props.errors.username}</div>
                         )}

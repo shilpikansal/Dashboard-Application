@@ -1,13 +1,13 @@
 package com.reactspring.dashboardapp.domain;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 
 @Entity
-public class ProjectTask {
+public class OriginalProjectTask {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,10 +16,6 @@ public class ProjectTask {
     private String summary;
     private String acceptanceCriteria;
     private String status;
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @ManyToOne(optional = false, fetch=FetchType.EAGER)
-    @JoinColumn(foreignKey = @ForeignKey(name = "user_dashboard_association"))
-    private User user;
 
     public Long getId() {
         return id;
@@ -27,14 +23,6 @@ public class ProjectTask {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public String getSummary() {

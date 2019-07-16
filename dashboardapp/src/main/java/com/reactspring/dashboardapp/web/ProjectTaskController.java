@@ -39,10 +39,11 @@ public class ProjectTaskController {
         return new ResponseEntity<ProjectTask>(newPT, HttpStatus.CREATED);
     }
 
-    @GetMapping("/all")
-    public List<ProjectTask> getAllPTs()
+
+    @GetMapping("/all/{user_id}")
+    public List<ProjectTask> getAllPTsById(@PathVariable Long user_id)
     {
-        return (List<ProjectTask>)projectTaskService.findAll();
+        return (List<ProjectTask>)projectTaskService.findByUserId(user_id);
 
     }
 

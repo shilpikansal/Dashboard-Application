@@ -18,16 +18,11 @@ public class ProjectTaskService{
         return projectTaskRepository.save(projectTask);
     }
 
-    public Iterable<ProjectTask> findAll()
+    public Iterable<ProjectTask> findByUserId(Long user_id)
     {
-        return projectTaskRepository.findAll();
-    }
-
-   /* public List<ProjectTask> findAll()
-    {
-        List<ProjectTask> result=(List<ProjectTask>) projectTaskRepository.findAll();
+        Iterable<ProjectTask> result=(List<ProjectTask>) projectTaskRepository.findByUserId(user_id);
         return result;
-    }*/
+    }
 
 
     public ProjectTask findById(Long id){

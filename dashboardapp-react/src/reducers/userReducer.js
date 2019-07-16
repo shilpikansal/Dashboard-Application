@@ -1,4 +1,4 @@
-  import { GET_USER_DETAILS, VALID_USER, INVALID_USER } from './../actions/types'
+  import { GET_USER_DETAILS, VALID_USER, INVALID_USER, LOGOUT } from './../actions/types'
 
 const initialState={
   message:"",
@@ -18,8 +18,12 @@ export default function(state=initialState,action){
       return{...state,user:action.payload.user,loggedIn:true,message:""}
       break;
 
-      case GET_USER_DETAILS:
+    case GET_USER_DETAILS:
         return state;
+        break;
+
+    case LOGOUT:
+        return {...state,user:{},loggedIn:false,message:"You have successfully logged out"}
         break;
 
     default:

@@ -49,10 +49,11 @@ class AddProjectTask extends Component
   {
     if(this.props.loggedIn==false)
     {
-      console.log("flseeeeeeeeeeee")
       return (
-        <div className="alert alert-info text-center" role="alert">
-          Please login to add the task
+        <div>
+          <div className="alert alert-info text-center" role="alert">
+            Please login to add the task
+          </div>
         </div>
       );
     }
