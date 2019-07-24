@@ -8,7 +8,6 @@ public class DashboardappApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(DashboardappApplication.class, args);
-        System.out.println("Hi");
     }
 
 }

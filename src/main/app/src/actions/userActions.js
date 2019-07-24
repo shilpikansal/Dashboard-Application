@@ -1,9 +1,9 @@
 import { GET_USER_DETAILS, VALID_USER, INVALID_USER, GET_ERRORS, LOGOUT } from './types'
 
-var client = require('./axiosClient');
+import axios from "axios";
 
 export const validateUser = (username, password) => async dispatch => {
-    const res=await client.get(`api/user/username=${username}&&password=${password}`);
+    const res=await axios.get(`http://localhost:5000/api/user/username=${username}&&password=${password}`);
     if(typeof(res.data)=="string")
     {
       dispatch({
@@ -28,7 +28,7 @@ export const getUserDetails=() => dispatch => {
 
 export const registerUser = (user,history) => async dispatch => {
     try {
-      await client.post("api/user/register",user);
+        await axios.post("http://localhost:5000/api/user/register",user);
       history.push("/");
       dispatch({
         type:GET_ERRORS,

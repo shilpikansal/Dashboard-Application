@@ -23,7 +23,7 @@ function App() {
           <Route path="/register" component={Register} />
           <Route path="/projectBoard/" component={ProjectBoard} />
           <Route path="/addProjectTask" component={AddProjectTask} />
-          <Route path="/updateProjectTask/:pt_id" component={updateProjectTask} />
+          <Route exact path="/updateProjectTask/:pt_id" component={updateProjectTask} />
           <Route path="/logout" component={Logout} />
         </div>
       </Router>
