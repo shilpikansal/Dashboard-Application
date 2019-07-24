@@ -2,8 +2,10 @@ import { GET_USER_DETAILS, VALID_USER, INVALID_USER, GET_ERRORS, LOGOUT } from '
 
 import axios from "axios";
 
+const endpoint = (process.env.NODE_ENV !== 'production') ? 'http://localhost:5000/' : 'http://dashboard-shilpikansal.us-east-1.elasticbeanstalk.com/';
+
 export const validateUser = (username, password) => async dispatch => {
-    const res=await axios.get(`http://localhost:5000/api/user/username=${username}&&password=${password}`);
+    const res=await axios.get(endpoint +`api/user/username=${username}&&password=${password}`);
     if(typeof(res.data)=="string")
     {
       dispatch({
@@ -28,7 +30,7 @@ export const getUserDetails=() => dispatch => {
 
 export const registerUser = (user,history) => async dispatch => {
     try {
-        await axios.post("http://localhost:5000/api/user/register",user);
+        await axios.post(endpoint +"api/user/register",user);
       history.push("/");
       dispatch({
         type:GET_ERRORS,
