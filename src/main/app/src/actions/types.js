@@ -7,3 +7,6 @@ export const VALID_USER = "VALID_USER";
 export const INVALID_USER = "INVALID_USER";
 export const LOGOUT = "LOGOUT";
 export const MESSAGE = "MESSAGE";
+// export const ENDPOINT = (process.env.NODE_ENV !== 'production') ? 'http://localhost:5000/' : 'http://dashboard-shilpikansal.us-east-1.elasticbeanstalk.com/';
+
+export const ENDPOINT = 'http://localhost:5000/';
