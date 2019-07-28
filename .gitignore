@@ -7,6 +7,9 @@
 # Resources file for application.properties
 src/main/resources/*
 
+# skip spring build directory
+target/*
+
 # BlueJ files
 *.ctxt
 

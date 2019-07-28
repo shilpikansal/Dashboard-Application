@@ -11,6 +11,7 @@ import {BrowserRouter as Router,Route} from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import { store, persistor} from './store'
+import 'bootstrap/dist/js/bootstrap.min.js'
 
 function App() {
   return (

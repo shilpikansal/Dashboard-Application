@@ -6,3 +6,4 @@ export const GET_USER_DETAILS="GET_USER_DETAILS";
 export const VALID_USER = "VALID_USER";
 export const INVALID_USER = "INVALID_USER";
 export const LOGOUT = "LOGOUT";
+export const MESSAGE = "MESSAGE";
