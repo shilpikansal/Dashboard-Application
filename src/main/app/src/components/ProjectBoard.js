@@ -16,9 +16,11 @@ class ProjectBoard extends Component {
   }
 
   componentDidMount() {
+    const user = this.props.user
     console.log("in did")
     console.log(`in did: and user: ${this.props.user.id}`)
-   this.props.getAllTasks(this.props.user.id);
+    if(Object.entries(user).length !== 0 && user.constructor === Object)
+      this.props.getAllTasks(this.props.user.id);
  }
 
 
