@@ -8,6 +8,7 @@ import Logout from './components/Logout'
 import Register from './components/Register'
 import updateProjectTask from './ProjectTask/UpdateProjectTask'
 import {BrowserRouter as Router,Route} from 'react-router-dom'
+import {Switch} from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import { store, persistor} from './store'
@@ -20,12 +21,15 @@ function App() {
     <Router>
         <div className="App">
           <NavBar />
-          <Route path="/" exact component={Login} />
-          <Route path="/register" component={Register} />
-          <Route path="/projectBoard/" component={ProjectBoard} />
-          <Route path="/addProjectTask" component={AddProjectTask} />
-          <Route exact path="/updateProjectTask/:pt_id" component={updateProjectTask} />
-          <Route path="/logout" component={Logout} />
+          <Switch>
+            <Route path="/" exact component={Login} />
+            <Route path="/register" component={Register} />
+            <Route path="/projectBoard/" component={ProjectBoard} />
+            <Route path="/addProjectTask" component={AddProjectTask} />
+            <Route exact path="/updateProjectTask/:pt_id" component={updateProjectTask} />
+            <Route path="/logout" component={Logout} />
+            <Route component={Login} />
+          </Switch>
         </div>
       </Router>
       </PersistGate >
